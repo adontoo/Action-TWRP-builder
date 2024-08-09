@@ -5,42 +5,48 @@ on:
     inputs:
       MANIFEST_URL:
         description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
-        required: true
+        required: false
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
-        required: true
+        required: false
         default: 'twrp-12.1'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
-        required: true
-        default: 'https://github.com/TeamWin/android_device_asus_I003D'
+        required: false
+        default: 'https://github.com/adontoo/android_device_oneplus_guacamole_TWRP'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
-        required: true
-        default: 'android-12.1'
+        required: false
+        default: 'A14'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
-        required: true
-        default: 'device/asus/I003D'
+        required: false
+        default: 'device/oneplus/guacamole'
       COMMON_TREE_URL:
         description: 'COMMON_TREE_URL (if no common tree, leave blank)'
         required: false
+        default: 'https://github.com/adontoo/android_device_oneplus_sm8150-common_TWRP'
       COMMON_PATH:
         description: 'COMMON_PATH (if no common tree, leave blank)'
         required: false
+        default: 'device/oneplus/sm8150-common'
+      COMMON_TREE_BRANCH:
+        description: 'COMMON_TREE_BRANCH'
+        required: false
+        default: 'A14'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
-        required: true
-        default: 'I003D'
+        required: false
+        default: 'guacamole'
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
-        required: true
-        default: 'twrp_I003D'
+        required: false
+        default: 'twrp_guacamole'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
-        required: true
-        default: 'recovery'
+        required: false
+        default: 'boot'
 
 jobs:
   build:
@@ -124,7 +130,7 @@ jobs:
         github.event.inputs.COMMON_TREE_URL != null
         && github.event.inputs.COMMON_PATH != null
       run: |
-        git clone ${{ github.event.inputs.COMMON_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.COMMON_PATH }}
+        git clone ${{ github.event.inputs.COMMON_TREE_URL }} -b ${{ github.event.inputs.COMMON_TREE_BRANCH }} ./${{ github.event.inputs.COMMON_PATH }}
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Check Build Tree
